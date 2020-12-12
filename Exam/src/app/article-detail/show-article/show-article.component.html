@@ -1,0 +1,97 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary float-right m-2"
+        data-toggle="modal" data-target="#exampleModal"
+        (click)="addClick()"
+        data-backdrop="static" data-keyboard="false">
+  Add Article</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ModalTitle}}</h5>
+        <button type="button" class="close"
+                data-dismiss="modal" aria-label="Close"
+                (click)="closeClick()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-add-edit-article [articles]="article" *ngIf="ActivateAddEditArticleComp"></app-add-edit-article>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="showing">
+<div class="show" *ngFor="let article of ArticlesList2">
+  <table>
+    <tr><h1>{{article.ArticleName}}</h1> </tr>
+    <tr *ngFor="let author of filterAuthor(article.ArticleId)">{{author.AuthorName}}</tr>
+    <tr>{{article.MainText}}</tr>
+    <div class="comments">
+      <form [formGroup]="form3" (ngSubmit)="addComments()">
+
+      <label class="col-sm-2 col-form-label">Name</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" formControlName="commentName"
+               placeholder="Name"></div>
+      <label class="col-sm-2 col-form-label">MainText</label>
+      <div class="col-sm-10">
+      <textarea type="text" class="form-control about" formControlName="mainText"
+                placeholder="MainText" ></textarea></div>
+        <button type="submit" class="btn btn-light mr-1">
+          Add
+        </button>
+
+
+      <tr *ngFor="let comment of filterComment(comments.ArticleId)">
+      <td>{{comments.CommentName}}</td>
+
+      </tr>
+      </form>
+    </div>
+  </table>
+</div>
+</div>
+
+
+
+
+<table class="table table-striped">
+  <thead>
+  <th>Article Name</th>
+  <th>Author Name</th>
+  </thead>
+  <tbody>
+  <tr *ngFor="let article of ArticlesList">
+
+    <td >
+      {{article.ArticleName}}
+    </td>
+<!--    <td *ngFor="let author of Authors"><div *ngIf="article.AuthorId===author.AuthorId; ">{{author.AuthorName}}</div></td>-->
+    <td *ngFor="let author of filterAuthor(article.ArticleId)">{{author.AuthorName}}</td>
+    <td>
+      <button type="button" class="btn btn-light mr-1"
+              data-toggle="modal" data-target="#exampleModal"
+              (click)="editClick(article)"
+              data-backdrop="static" data-keyboard="false">
+        Edit
+      </button>
+      <button type="button" class="btn btn-light mr-1"
+              (click)="deleteClick(article)">
+        Delete
+      </button>
+      <button type="button" class="btn btn-light mr-1"
+              (click)="showClick(article.ArticleId)">
+        Show
+      </button>
+
+
+    </td>
+  </tr>
+  </tbody>
+</table>
+<router-outlet></router-outlet>

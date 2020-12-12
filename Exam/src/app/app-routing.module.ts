@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import {DeletedComponent} from './deleted/deleted.component';
-import {ArticleListComponent} from './article-list/article-list.component';
 import {ArticleDetailComponent} from './article-detail/article-detail.component';
 import {AuthorsComponent} from './authors/authors.component';
 
@@ -12,8 +11,9 @@ const routes: Routes = [
   children: [
     {
       path: 'articles',
-      component: ArticleListComponent
+      component: ArticleDetailComponent
     },
+    {path: 'articles/:id', component: ArticleDetailComponent },
     {
       path: 'authors',
       component: AuthorsComponent
@@ -35,6 +35,5 @@ export const routerComponents = [
   AboutComponent,
   DeletedComponent,
   ArticleDetailComponent,
-  ArticleListComponent,
   AuthorsComponent
 ];
